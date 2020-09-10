@@ -110,6 +110,4 @@ def make_file(data,filename='data.json'):
 if __name__ == "__main__":
     cli()
 
-if __name__ == '__main__':
-    cli()
 
