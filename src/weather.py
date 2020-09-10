@@ -38,8 +38,6 @@ def coro(f):
 @click.option("--cities")
 @coro
 async def weather(city, celcius, fahrenheit, kelvin,  cities):
-    units = ["metric","° Celcius"] if celcius else ["imperial","° Fahrenheit"] if fahrenheit else [None,"° Kelvin"]
-
 
     if cities:
         print(f"datetime : {datetime.datetime.now()}")
@@ -92,9 +90,25 @@ async def forecast(city,days):
         filterData = filter(lambda ndata: datetime.datetime.fromtimestamp(ndata['dt']).strftime("%d") == datetime.datetime.fromtimestamp(list_data[0]['dt']).strftime("%d"),list_data)
         
         for i in filterData:
-            date=datetime.datetime.now()
             temperature = f"{i['weather'][0]['main']}, {i['weather'][0]['description']}"
             print(temperature)
+
+@cli.command(name="dailyforecast")
+@click.argument("city",default=False,type=click.STRING)
+@click.option('--cities')
+@coro
+async def dailyforecast (city,cities):
+    getRequest = await fetcher.get(f"{BASE_URL}q={city}&appid={API_KEY}")
+    dailyforecast = json.loads(getRequest)
+    make_file(dailyforecast,"dailyforecast.json")
+
+def make_file(data,filename='dailyforecast.json'):
+    f = open(filename, "w") 
+    f.write(json.dumps(data,indent = 1)) 
+    f.close() 
+    
+if __name__ == "__main__":
+    cli()
 
 if __name__ == '__main__':
     cli()
