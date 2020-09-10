@@ -31,13 +31,15 @@ def coro(f):
 
 @cli.command(name="weather")
 @click.argument("city",type=click.STRING)
-# @click.option('--celcius',default=False,is_flag=True,type=click.BOOL, help='Temperatur Celcius')
-# @click.option('--fahrenheit',default=False,is_flag=True,type=click.BOOL, help='Temperatur Fahrenheit ')
-# @click.option('--kelvin',default=False,is_flag=True,type=click.BOOL, help='Temperatur Kelvin')
-# @click.option('--temp',default=False,is_flag=True,type=click.BOOL, help='Menampilkan Temperatur dan cuaca')
+@click.option('--celcius',default=False,is_flag=True,type=click.BOOL)
+@click.option('--fahrenheit',default=False,is_flag=True,type=click.BOOL)
+@click.option('--kelvin',default=False,is_flag=True,type=click.BOOL)
+@click.option('--temp',default=False,is_flag=True,type=click.BOOL, help='Menampilkan Temperatur dan cuaca')
 @click.option("--cities")
 @coro
-async def weather(city, cities):
+async def weather(city, celcius, fahrenheit, kelvin,  cities):
+    units = ["metric","° Celcius"] if celcius else ["imperial","° Fahrenheit"] if fahrenheit else [None,"° Kelvin"]
+
 
     if cities:
         print(f"datetime : {datetime.datetime.now()}")
@@ -65,11 +67,11 @@ async def weather(city, cities):
 
 
 
-@cli.command(name="dailyforecast")
+@cli.command(name="forecast")
 @click.argument("city",default=False,type=click.STRING)
 @click.option('--days',default=False,is_flag=True,type=click.BOOL)
 @coro
-async def dailyforecast(city,days):
+async def forecast(city,days):
     if days:
         print("processing ...")
         getRequest = await fetcher.get(f"{BASE_URL}q={city}&appid={API_KEY}")
