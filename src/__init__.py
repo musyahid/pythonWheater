@@ -1,5 +1,6 @@
 import click
-from src.weather import weather
+from src.weather import weather,dailyforecast
+
 
 @click.group()
 def cli():
@@ -7,6 +8,7 @@ def cli():
 
 #1
 cli.add_command(weather)
+cli.add_command(dailyforecast)
 
 
 if __name__ == "__main__":
