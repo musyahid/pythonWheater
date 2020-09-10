@@ -1,0 +1,7 @@
+setup.py
+cliweather_abror.egg-info/PKG-INFO
+cliweather_abror.egg-info/SOURCES.txt
+cliweather_abror.egg-info/dependency_links.txt
+cliweather_abror.egg-info/entry_points.txt
+cliweather_abror.egg-info/requires.txt
+cliweather_abror.egg-info/top_level.txt
