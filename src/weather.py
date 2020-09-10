@@ -102,7 +102,7 @@ async def dailyforecast (city,cities):
     dailyforecast = json.loads(getRequest)
     make_file(dailyforecast,"dailyforecast.json")
 
-def make_file(data,filename='dailyforecast.json'):
+def make_file(data,filename='data.json'):
     f = open(filename, "w") 
     f.write(json.dumps(data,indent = 1)) 
     f.close() 
